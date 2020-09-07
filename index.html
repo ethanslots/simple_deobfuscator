@@ -24,7 +24,6 @@
                     isUpper = false;
                   });
                   
-                  console.log(output);
                   return atob(output);
                 } catch (_e) {
                   return undefined;
@@ -45,7 +44,13 @@
         return matched || "";
       }
       
-      doParse(Parsed);
+      let centerEle = document.createElement("center"), headerEle;
+      
+      headerEle.appendChild(document.createTextNode(doParse(Parsed)));
+      
+      centerEle.appendChild(headerEle);
+      
+      document.body.appendChild(headerEle);
     </script>
   </body>
 </html>
