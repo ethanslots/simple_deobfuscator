@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Simple Deobfuscator</title>
+  </head>
+  <body>
+    <script>
+      const Parsed = Object.fromEntries(window.location.href.match(/(?<=.+\?)(\w+=\w*&?)+/g)[0].split("&").map(val => val.split("="))),
+            HowToParse = {
+              base64: _ => {
+                try {
+                  let isUpper = false, output = "";
+                  
+                  [..._].forEach(v => {
+                    let set;
+                  
+                    if (v === "_") {
+                      isUpper = true;
+                      set = true;
+                      return;
+                    }
+                      
+                    output += isUpper ? (set ? v : v.toUpperCase()) : v;
+                    isUpper = false;
+                  });
+                  
+                  console.log(output);
+                  return atob(output);
+                } catch (_e) {
+                  return undefined;
+                }
+              }
+              // Add more later
+            }
+            
+      function doParse(parsedObject) {
+        let matched = undefined;
+      
+        Object.entries(HowToParse).forEach(([encoding, decodingFunction]) => {
+          if (parsedObject.encoding === encoding) matched = decodingFunction(parsedObject.text);
+        });
+        
+        // If we got here and `match' is still `undefined', then no match was found; just return a blank string then
+        
+        return matched || "";
+      }
+      
+      doParse(Parsed);
+    </script>
+  </body>
+</html>
