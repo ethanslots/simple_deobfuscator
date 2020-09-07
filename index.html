@@ -2,8 +2,11 @@
 <html>
   <head>
     <title>Simple Deobfuscator</title>
+    <style>#mainh {text-align: center;}</style>
   </head>
   <body>
+    <h1 id="mainh"></h1>
+    
     <script>
       const Parsed = Object.fromEntries(window.location.href.match(/(?<=.+\?)(\w+=\w*&?)+/g)[0].split("&").map(val => val.split("="))),
             HowToParse = {
@@ -44,13 +47,7 @@
         return matched || "";
       }
       
-      let centerEle = document.createElement("center"), headerEle = document.createElement("h1");
-      
-      headerEle.appendChild(document.createTextNode(doParse(Parsed)));
-      
-      centerEle.appendChild(headerEle);
-      
-      document.body.appendChild(headerEle);
+      document.getElementById("mainh").innerText = doParse(Parsed);
     </script>
   </body>
 </html>
